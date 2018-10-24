@@ -9,8 +9,13 @@ var config = require('./config/default.js');
 var koaStatic = require('koa-static')
 var app=new Koa()
 const routers = require('./routes/index')
-
-
+const METHODS = [
+  'PUT',
+  'DELETE',
+  'POST',
+  'GET',
+  'OPTION',
+];
 
 // session存储配置
 const sessionMysqlConfig= {
@@ -18,7 +23,7 @@ const sessionMysqlConfig= {
   password: config.database.PASSWORD,
   database: config.database.DATABASE,
   host: config.database.HOST,
-}
+};
 
 // 配置session中间件
 app.use(session({
@@ -30,7 +35,7 @@ app.use(session({
 app.use(async (ctx, next) => {
   ctx.set('Access-Control-Allow-Headers', 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With')
   ctx.set('Access-Control-Allow-Origin', 'http://localhost:9000');
-  ctx.set('Access-Control-Allow-Methods', 'PUT,DELETE,POST,GET');
+  ctx.set('Access-Control-Allow-Methods', METHODS.join(','));
   ctx.set('Access-Control-Allow-Credentials', true);
   ctx.set('Access-Control-Max-Age', 3600 * 24);
   await next();
@@ -55,6 +60,21 @@ app.use(routers.routes()).use(routers.allowedMethods())
 // app.use(require('./routers/user').routes())
 // app.use(require('./routers/posts.js').routes())
 // app.use(require('./routers/signout.js').routes())
+
+const _sql = require('./sql/create.sql');
+const { query } = require('./lib/mysql');
+// 执行一遍数据库
+setImmediate(async () => {
+  const { success, data, err } = await query(_sql, []);
+  if (success) {
+    console.log('Execut create sql successed!');
+  } else {
+    console.log(err);
+  }
+ 
+});
+
+
 
 // 监听在1200
 app.listen(config.port)

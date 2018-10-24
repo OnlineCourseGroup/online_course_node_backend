@@ -3,7 +3,7 @@ const config = {
   port: 1200,
   // 数据库配置
   database: {
-    DATABASE: 'tour',
+    DATABASE: 'online_course',
     USERNAME: 'root',
     PASSWORD: 'lotterygroup',
     PORT: '3306',

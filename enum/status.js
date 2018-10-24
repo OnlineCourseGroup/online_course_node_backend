@@ -1,5 +1,4 @@
 module.exports = {
-  DELED: 404,
-  ABA: 111,
-  NORMAL: 0,
+  DELETED: 404,
+  NORMAL: 200,
 }
