@@ -61,16 +61,41 @@ app.use(routers.routes()).use(routers.allowedMethods())
 // app.use(require('./routers/posts.js').routes())
 // app.use(require('./routers/signout.js').routes())
 
-const _sql = require('./sql/create.sql');
+
+const __sql = `create table if not exists online_course_user(
+  id int(11) NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
+  user_name varchar(50)  NOT NULL COMMENT '用户的昵称',
+  user_password varchar(16) NOT NULL COMMENT '用户密码',
+  user_phone varchar(11) NOT NULL COMMENT '用户的手机号',
+  user_balance int(11) NULL COMMENT '用户的余额',
+  user_bank_card_no varchar(19) NOT NULL COMMENT '用户银行卡账号', -- 正常为16/17,信用卡为16,最长的为19
+  user_id_card_no varchar(18) NOT NULL COMMENT '用户身份证号', -- 新版为18，老版为15
+  gmt_create_time int(11) NOT NULL COMMENT '用户创建时间<格林威治>(20180607)',
+  status int(11) DEFAULT 200 NULL COMMENT '用户的状态（删除为404,正常为200, etc）',
+  user_info varchar(500) NULL COMMENT 'region、gender、age、interest_subject_ids、etc',
+  extra_info varchar(300) NOT NULL DEFAULT '{}' COMMENT '一些额外信息',
+  PRIMARY KEY (id)
+ );`;
+ const drop = 'drop table if exists online_course_user;'
+
+const sqls = require('./sql/createSql');
 const { query } = require('./lib/mysql');
 // 执行一遍数据库
 setImmediate(async () => {
-  const { success, data, err } = await query(_sql, []);
-  if (success) {
-    console.log('Execut create sql successed!');
-  } else {
-    console.log(err);
+  for(const each of sqls) {
+    const { drop, create, use} = each;
+    await query(drop, []);
+    await query(create, []);
+    if (use) await query(use, []);
   }
+  console.log('Execut create sql successed!');
+  // const { success, data, err } = await query(drop, []);
+  // await query(__sql, []);
+  // if (success) {
+  //   console.log('Execut create sql successed!');
+  // } else {
+  //   console.log(err);
+  // }
  
 });
 
