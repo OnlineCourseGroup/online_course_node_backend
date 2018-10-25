@@ -64,6 +64,15 @@ class BaseService {
       ctx.body = failed(err)
     }
   }
+  async excute(ctx, key, data = '操作成功') {
+    const { body: row } = ctx.request;
+    const { success, err } = await this.controller[key](row)
+    if (success) {
+      ctx.body = successWithCode(data)
+    } else {
+      ctx.body = failed(err)
+    }
+  }
 }
 
 module.exports = BaseService

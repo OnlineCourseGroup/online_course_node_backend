@@ -1,5 +1,5 @@
 // 成功返回
-const success = (result) => {
+const success = (result = true) => {
   return {
     retCode: 200,
     retValue: result

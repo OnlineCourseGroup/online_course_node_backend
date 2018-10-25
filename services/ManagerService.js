@@ -6,16 +6,9 @@ class ManagerService extends BaseService {
     super();
     this.controller = new ManagerController();
   }
+  
   async login(ctx) {
-    const row = ctx.request.body;
-    const { success, err } = await this.controller.login(row);
-    if (success) {
-      ctx.body = success(true);
-      return;
-    } else {
-      ctx.body = failed(err);
-      return;
-    }
+    await this.execute(ctx, 'login', true);
   }
 }
 module.exports = new ManagerService();
