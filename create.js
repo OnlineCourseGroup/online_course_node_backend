@@ -16,6 +16,15 @@ setImmediate(async () => {
   // } else {
   //   console.log(err);
   // }
+  // 添加超级管理员
+  const isDev = process.env.NODE_ENV === 'DEV';
+  if (isDev) {
+    const datas = require('./sql/data');
+    for(const data of datas) {
+      const { insert } = data;
+      await query(insert, []);
+    }
+  }
   process.exit(0);
  
 });

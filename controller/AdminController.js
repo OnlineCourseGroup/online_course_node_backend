@@ -1,4 +1,6 @@
 const BaseController = require( './BaseConroller');
+const { STATUS } = require('../enum') // 导入枚举类型STATUS
+
 class AdminController extends BaseController {
   constructor(props) {
     super(props);
@@ -6,9 +8,9 @@ class AdminController extends BaseController {
   }
 
   async login(row) {
-    const { adminName, password } = row;
-    const sql = `select count(*) from ${this.table} where admin_name=? and password = ?`;
-    return await this.excute(sql, [adminName, password, STATUS.NORMAL]);
+    const { account, password } = row;
+    const sql = `select count(*) from ${this.table} where account=? and password = ?`;
+    return await this.excute(sql, [account, password, STATUS.NORMAL]);
   }
 }
 module.exports = AdminController;

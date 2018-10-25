@@ -8,7 +8,8 @@ const services = {
   subject: require('../services/SubjectService'),
   course: require('../services/CourseService'),
   order: require('../services/OrderService'),
-}
+  rsa: require('../services/RSAService'),
+};
 // 配置所有的routes文件
 const routes = (config => {
 	return config.reduce((copy, name) => {
@@ -29,13 +30,16 @@ const routes = (config => {
   'user',
   'subject',
   'course',
+  'rsa',
 ])
 
 // 配置最终的路由，形式为
 // router.get(url, service.action)
 routes.forEach(item => {
   const { _origin: serviceName, action, path, method } = item;
+  // console.log(serviceName);
   const service = services[serviceName];
-  router[method](path, service[action])
+  // console.log(service);
+  router[method](path, (ctx) => service[action](ctx))
 })
 module.exports = router

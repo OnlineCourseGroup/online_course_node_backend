@@ -3,15 +3,15 @@ module.exports = [
     drop: 'DROP TABLE IF EXISTS `online_course_user`;',
     create: `CREATE TABLE online_course_user (
       id int NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
-      name varchar(50)  NOT NULL COMMENT '用户的昵称',
+      user_name varchar(50)  NOT NULL COMMENT '用户的昵称',
       password varchar(16) NOT NULL COMMENT '用户密码',
       phone varchar(11) NOT NULL COMMENT '用户的手机号',
-      balance int NULL COMMENT '用户的余额',
-      bank_card_no varchar(19) NOT NULL COMMENT '用户银行卡账号', -- 正常为16/17,信用卡为16,最长的为19
-      id_card_no varchar(18) NOT NULL COMMENT '用户身份证号', -- 新版为18，老版为15
+      user_balance int NULL COMMENT '用户的余额',
+      user_bank_card_no varchar(19) NOT NULL COMMENT '用户银行卡账号', -- 正常为16/17,信用卡为16,最长的为19
+      user_id_card_no varchar(18) NOT NULL COMMENT '用户身份证号', -- 新版为18，老版为15
       gmt_create_time int NOT NULL COMMENT '用户创建时间<格林威治>(20180607)',
-      status int DEFAULT 200 NULL COMMENT '用户的状态（删除为404,正常为200, etc）',
-      info varchar(500) NULL COMMENT 'region、gender、age、interest_subject_ids、etc',
+      user_status int DEFAULT 200 NULL COMMENT '用户的状态（删除为404,正常为200, etc）',
+      user_info varchar(500) NULL COMMENT 'region、gender、age、interest_subject_ids、etc',
       extra_info varchar(300) NOT NULL DEFAULT '{}' COMMENT '一些额外信息',
       PRIMARY KEY (id)
     ) ENGINE=InnoDB;`,
@@ -20,16 +20,16 @@ module.exports = [
     drop: 'DROP TABLE IF EXISTS online_course_manager;',
     create: `CREATE TABLE online_course_manager (
       id int NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
-      name varchar(50)  NOT NULL COMMENT '管理者的昵称',
+      manager_name varchar(50)  NOT NULL COMMENT '管理者的昵称',
       password varchar(16) NOT NULL COMMENT '管理者密码',
       phone varchar(11) NOT NULL COMMENT '管理者的手机号',
-      balance int NULL COMMENT '管理者的余额',
-      bank_card_no varchar(19) NULL COMMENT '管理者银行卡账号', -- 正常为16/17,信用卡为16,最长的为19
-      id_card_no varchar(18) NULL COMMENT '管理者身份证号', -- 新版为18，老版为15
-      profession_no varchar(18) NULL COMMENT '管理者教师资格证（上传视频时需绑定）' ,
+      manager_balance int NULL COMMENT '管理者的余额',
+      manager_bank_card_no varchar(19) NULL COMMENT '管理者银行卡账号', -- 正常为16/17,信用卡为16,最长的为19
+      manager_id_card_no varchar(18) NULL COMMENT '管理者身份证号', -- 新版为18，老版为15
+      manager_profession_no varchar(18) NULL COMMENT '管理者教师资格证（上传视频时需绑定）' ,
       gmt_create_time varchar(20) NOT NULL COMMENT '管理者创建时间<格林威治>(20180607)',
-      status int NULL DEFAULT 200 COMMENT '管理者的状态（删除为404,正常为200, etc）',
-      info varchar(500) NULL COMMENT 'region、gender、age、interest_subject_ids、etc',
+      manager_status int NULL DEFAULT 200 COMMENT '管理者的状态（删除为404,正常为200, etc）',
+      manager_info varchar(500) NULL COMMENT 'region、gender、age、interest_subject_ids、etc',
       extra_info varchar(300) NOT NULL DEFAULT '{}' COMMENT '一些额外信息',
       PRIMARY KEY (id)
     ) ENGINE=InnoDB;`,
@@ -53,14 +53,14 @@ module.exports = [
     drop: 'DROP TABLE IF EXISTS online_course_course;',
     create: `CREATE TABLE online_course_course (
       id int NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
-      subject_id varchar(100) NULL COMMENT '课程科目编号',
-      uploader_id varchar(100) NOT NULL COMMENT '课程上传及维护者编号, 9999为系统',
-      name varchar(50) NOT NULL COMMENT '课程名(具有唯一性)',
-      description varchar(500) NOT NULL COMMENT '课程描述',
-      resource_url varchar(300) NOT NULL COMMENT '课程表地址‘，
-      tags varchar(11) NULL COMMENT '课程标签，json数组[tagId1, tagId2, ...]',
+      course_subject_id varchar(100) NULL COMMENT '课程科目编号',
+      course_upload_manager_id varchar(100) NOT NULL COMMENT '课程上传及维护者编号, 9999为系统',
+      course_name varchar(50) NOT NULL COMMENT '课程名(具有唯一性)',
+      course_description varchar(500) NOT NULL COMMENT '课程描述',
+      course_resource_url varchar(300) NOT NULL COMMENT '课程表地址‘，
+      course_tags varchar(11) NULL COMMENT '课程标签，json数组[tagId1, tagId2, ...]',
       gmt_create_time varchar(20) NOT NULL COMMENT '课程创建时间<格林威治>(20180607)',
-      status int NULL DEFAULT 200 COMMENT '课程的状态（删除为404,正常为200, etc）',
+      course_status int NULL DEFAULT 200 COMMENT '课程的状态（删除为404,正常为200, etc）',
       extra_info varchar(300) NOT NULL DEFAULT '{}' COMMENT '一些额外信息',
       PRIMARY KEY (id)
     ) ENGINE=InnoDB;`,
@@ -69,9 +69,9 @@ module.exports = [
     drop: 'DROP TABLE IF EXISTS online_course_subject;',
     create: `CREATE TABLE online_course_subject (
       id int NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
-      name varchar(100) NULL COMMENT '科目名称',
-      upload_id varchar(100) NOT NULL COMMENT '课程上传及维护者编号, 9999为系统',
-      status int DEFAULT 200 NULL COMMENT '课程的状态（删除为404,正常为200, etc）',
+      subject_name varchar(100) NULL COMMENT '科目名称',
+      subject_upload_manager_id varchar(100) NOT NULL COMMENT '课程上传及维护者编号, 9999为系统',
+      subject_status int DEFAULT 200 NULL COMMENT '课程的状态（删除为404,正常为200, etc）',
       gmt_create_time varchar(20) NOT NULL COMMENT '课程科目创建时间<格林威治>(20180607)',
       extra_info varchar(300) NOT NULL DEFAULT '{}' COMMENT '一些额外信息',
       PRIMARY KEY (id)
@@ -81,14 +81,14 @@ module.exports = [
     drop: 'DROP TABLE IF EXISTS online_course_order;',
     create: `CREATE TABLE online_course_order (
       id int NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
-      amount int NOT NULL COMMENT '订单总额（分为单位例如，100元为10,000）',
-      eraner_id varchar(100) NOT NULL COMMENT '订单的收益者编号(与manger-id相关)',
-      cosumer_id varchar(100) NOT NULL COMMENT '订单的消费者编号（与user-id相关）',
-      course_id varchar(100) NOT NULL COMMENT '订单的课程编号',
-      timestamp_create_time int NOT NULL COMMENT '订单创建时间<时间戳>(15012303)',
+      order_amount int NOT NULL COMMENT '订单总额（分为单位例如，100元为10,000）',
+      order_eraner_id varchar(100) NOT NULL COMMENT '订单的收益者编号(与manger_id相关)',
+      order_cosumer_id varchar(100) NOT NULL COMMENT '订单的消费者编号（与user_id相关）',
+      order_course_id varchar(100) NOT NULL COMMENT '订单的课程编号',
+      order_timestamp_create_time int NOT NULL COMMENT '订单创建时间<时间戳>(15012303)',
       gmt_create_time varchar(20) NOT NULL COMMENT '订单创建时间<格林威治>(20180607)',
-      status int NULL DEFAULT 200 COMMENT '订单的状态（删除为404,正常为200, etc）',
-      progress int NULL DEFAULT 100 COMMENT '订单进行状态（CREATED:100, paid:200, error: 500, canceld: 304, etc）',
+      order_status int NULL DEFAULT 200 COMMENT '订单的状态（删除为404,正常为200, etc）',
+      order_progress int NULL DEFAULT 100 COMMENT '订单进行状态（CREATED:100, paid:200, error: 500, canceld: 304, etc）',
       extra_info varchar(300) NOT NULL DEFAULT '{}' COMMENT '一些额外信息',
       PRIMARY KEY (id)
     ) ENGINE=InnoDB;`,
@@ -97,14 +97,14 @@ module.exports = [
     drop: 'DROP TABLE IF EXISTS online_course_comment;',
     create: `CREATE TABLE online_course_comment (
       id int NOT NULL AUTO_INCREMENT COMMENT '主键，自增',
-      amount int NOT NULL COMMENT '评价总额（分为单位例如，100元为10,000）',
-      owner_id varchar(100) NOT NULL COMMENT '收益者编号(与manger-id相关)',
-      commenter_id varchar(100) NOT NULL COMMENT '消费者编号（与user-id相关）',
-      course_id varchar(100) NOT NULL COMMENT '评价的课程编号',
-      content varchar(500) NOT NULL COMMENT '评价的内容',
+      comment_amount int NOT NULL COMMENT '评价总额（分为单位例如，100元为10,000）',
+      comment_owner_id varchar(100) NOT NULL COMMENT '收益者编号(与manger_id相关)',
+      comment_commenter_id varchar(100) NOT NULL COMMENT '消费者编号（与user_id相关）',
+      comment_course_id varchar(100) NOT NULL COMMENT '评价的课程编号',
+      comment_content varchar(500) NOT NULL COMMENT '评价的内容',
       gmt_create_time varchar(20) NOT NULL COMMENT '评价创建时间<格林威治>(20180607)',
-      status int DEFAULT 200 NULL COMMENT '课程的状态（删除为404,正常为200, etc）',
-      star_level int NULL DEFAULT 5  COMMENT ' 评论星级（1-5, 5 is best)',
+      comment_status int DEFAULT 200 NULL COMMENT '课程的状态（删除为404,正常为200, etc）',
+      comment_star_level int NULL DEFAULT 5  COMMENT ' 评论星级（1-5, 5 is best)',
       extra_info varchar(300) NOT NULL DEFAULT '{}' COMMENT '一些额外信息',
       PRIMARY KEY (id)
     ) ENGINE=InnoDB;`,

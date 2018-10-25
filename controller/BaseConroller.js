@@ -50,9 +50,9 @@ class BaseController {
     return await query(sql, [STATUS.DELETED, id])
   }
 
-  excute(sql, vals) {
+  async excute(sql, vals) {
     // 执行方法
-    return await = query(sql, vals)
+    return await query(sql, vals);
   }
   // log 方法
   log({func, err}) {
