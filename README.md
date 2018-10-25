@@ -4,6 +4,7 @@ A backend for Tour
  1. 打开mysql,运行sql下的sql语句
  2. npm install
  3. npm start
+ 4. npm / yarn run sql  运行数据库创建语句
  4. 查看api下各个接口所需要的参数及路径
 ### 文件夹详解
  1. controller

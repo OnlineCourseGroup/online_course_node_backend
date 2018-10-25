@@ -1,21 +1,20 @@
 const BaseService = require('./BaseService');
-const ManagerController = require('../controller/ManagerController');
+const UserController = require('../controller/UserController');
 
-class ManagerService extends BaseService {
+class UserService extends BaseService {
   constructor() {
     super();
-    this.controller = new ManagerController();
+    this.controller = new UserController();
   }
+    
   async login(ctx) {
     const row = ctx.request.body;
     const { success, err } = await this.controller.login(row);
     if (success) {
       ctx.body = success(true);
-      return;
     } else {
       ctx.body = failed(err);
-      return;
     }
   }
 }
-module.exports = new ManagerService();
+module.exports = new UserService();

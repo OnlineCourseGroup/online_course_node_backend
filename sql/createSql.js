@@ -56,6 +56,7 @@ module.exports = [
       course_upload_manager_id varchar(100) NOT NULL COMMENT '课程上传及维护者编号, 9999为系统',
       course_name varchar(50) NOT NULL COMMENT '课程名(具有唯一性)',
       course_description varchar(500) NOT NULL COMMENT '课程描述',
+      course_resource_url varchar(300) NOT NULL COMMENT '课程表地址‘，
       course_tags varchar(11) NULL COMMENT '课程标签，json数组[tagId1, tagId2, ...]',
       gmt_create_time varchar(20) NOT NULL COMMENT '课程创建时间<格林威治>(20180607)',
       course_status int NULL DEFAULT 200 COMMENT '课程的状态（删除为404,正常为200, etc）',
@@ -186,6 +187,7 @@ CREATE TABLE online_course_course (
   course_upload_manager_id varchar(100) NOT NULL COMMENT '课程上传及维护者编号, 9999为系统',
   course_name varchar(50) NOT NULL COMMENT '课程名(具有唯一性)',
   course_description varchar(500) NOT NULL COMMENT '课程描述',
+  course_resource_url varchar(300) NOT NULL COMMENT '课程表地址‘，
   course_tags varchar(11) NULL COMMENT '课程标签，json数组[tagId1, tagId2, ...]',
   gmt_create_time varchar(20) NOT NULL COMMENT '课程创建时间<格林威治>(20180607)',
   course_status int NULL DEFAULT 200 COMMENT '课程的状态（删除为404,正常为200, etc）',
