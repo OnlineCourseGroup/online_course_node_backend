@@ -43,7 +43,7 @@ module.exports = [
       password varchar(16) NOT NULL ,
       admin_phone varchar(11) NOT NULL ,
       gmt_create_time varchar(20) NOT NULL ,
-      admin_status int NULL DEFAULT 200 ,
+      status int NULL DEFAULT 200 ,
       admin_info varchar(500) NULL ,
       extra_info varchar(300) NOT NULL DEFAULT '{}',
       PRIMARY KEY (id)

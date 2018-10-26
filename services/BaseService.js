@@ -1,4 +1,4 @@
-const { pojo, filterUnderLine,} = require('../helper') // 获取辅助类里面的一些方法
+const { pojo, allTypeReplaceUnderLine,} = require('../helper') // 获取辅助类里面的一些方法
 const { success, failed, successWithCode } = pojo // 获取消息集里的一些辅助方法
 
 // 需要绑定this的方法
@@ -24,7 +24,7 @@ class BaseService {
     const { success: flag, data, err } = await this.controller.list();
     if (flag) {
       // success 为pojo消息集的成功返回
-      ctx.body = success(data);
+      ctx.body = success(allTypeReplaceUnderLine(data));
     } else {
       // failed 为pojo消息集的失败返回，下同
       ctx.body = failed(err)

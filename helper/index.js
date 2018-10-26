@@ -85,16 +85,18 @@ const fileterCamel = (obj, char = '_') => {
   })
 }
 
-const _replace = (str, reg, callback) => {
-  return str.replace(new RegExp(reg), callback);
+const _replace = (str, reg, identify = 'g', callback) => {
+  const val = str.replace(new RegExp(reg, identify), (...props) => callback(props));
+  console.log(val);
+  return val;
 }
 const _strReplaceChar = (str, char = '_', reverse = false) => {
   if (reverse) {
-    return _replace(str, `${char}[a-z]/g`, (str) => {
+    return str.replace(new RegExp(`${char}[a-z]`, 'g'), str => {
       return `${str.slice(1).toUpperCase()}`; 
     })
   }
-  return _replace(str, '/[A-Z]/g', (letter, index) => {
+  return str.replace(new RegExp(`[A-Z]`, 'g'), (letter, index) => {
     return index ? `${char}${letter.toLowerCase()}` : letter.toLowerCase();
   })
 }
@@ -128,6 +130,24 @@ const splitKeys_N_Vals = (obj, update = false) => {
 const replaceUnderLine = (key) => {
   return _strReplaceChar(key, '_', true);
 }
+const replaceUnderLineObj = obj => {
+  return Object.keys(obj).reduce((init, key) => {
+    // console.log(replaceUnderLine(key));
+    init[replaceUnderLine(key)] = obj[key];
+    return init;
+  }, {});
+}
+const allTypeReplaceUnderLine = obj => {
+  const type = Object.prototype.toString.call(obj).slice(8, -1);
+  switch (type) {
+    case 'Object':
+      return replaceUnderLineObj(obj);
+    case 'Array':
+      return obj.map(item => replaceUnderLineObj(item));
+    case 'String':
+      return replaceUnderLine(obj);
+  }
+}
 /**
  * 
  * @param {Object} obj  原对象
@@ -149,7 +169,8 @@ const  filterUnderLine = (obj, char = '_') => {
 
 module.exports = {
   NtNUpdate: update,
-  replaceUnderLine,
+  allTypeReplaceUnderLine,
   replaceCamel: fileterCamel,
+  // filterUnderLine,
   pojo,
 }
