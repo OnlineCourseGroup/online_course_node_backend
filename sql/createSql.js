@@ -41,7 +41,7 @@ module.exports = [
       admin_employee_no int NOT NULL ,
       account varchar(50)  NOT NULL ,
       password varchar(16) NOT NULL ,
-      admin_phone varchar(11) NOT NULL ,
+      phone varchar(11) NOT NULL ,
       gmt_create_time varchar(20) NOT NULL ,
       status int NULL DEFAULT 200 ,
       admin_info varchar(500) NULL ,
