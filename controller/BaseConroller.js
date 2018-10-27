@@ -20,7 +20,7 @@ class BaseController {
     const names = keys.join(',') // 对应的参数
     const questions = keys.map(item => '?').join(',') // 对应的参数占位符
     // 补全sql语句 insert into table (x, xx) values(x, xx)
-    const sql = `insert into ${this.table}(${names},create_time,status) values(${questions},now(),?)`
+    const sql = `insert into ${this.table}(${names},gmt_create_time,status) values(${questions},now(),?)`
     return await query(sql, [...vals, STATUS.NORMAL])
   }
 
