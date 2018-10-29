@@ -64,13 +64,18 @@ class BaseService {
       ctx.body = failed(err)
     }
   }
-  async excute(ctx, key, data = '操作成功') {
+  async excute(ctx, key) {
     const { body: row } = ctx.request;
-    const { success, err } = await this.controller[key](row)
+    const result = await this.controller[key](row);
+    return result;
+  }
+  async excuteNonData(ctx, key, msg = '操作成功') {
+    const { body: row } = ctx.request;
+    const { success, err }  = await this.controller[key](row);
     if (success) {
-      ctx.body = successWithCode(data)
+      ctx.body = successWithCode(msg);
     } else {
-      ctx.body = failed(err)
+      ctx.body = failed(err);
     }
   }
 }

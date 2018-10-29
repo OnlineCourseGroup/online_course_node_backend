@@ -64,13 +64,21 @@ class RSAService {
           return init;
         }, {})
         // 调用真正的登录接口
+        // const service = require('../services/AdminService');
+        // ctx.request.body = data;
         const Controller = require('../controller/AdminController');
         await new Controller().login(data).then(result => {
-          // console.log(result);
-          if (result.length === 0 || result === null || result === undefined)
-            res = failed('用户名或密码不对');
-          else 
-            res = success(true)
+          const { success: flag, data, err } = result;
+          if (flag) {
+            const { count } = data;
+            if (count < 1)
+              res = failed('用户名或密码不对');
+            else 
+              res = success(true);
+          } else {
+            res = failed(err);
+          }
+         
         })
       }
       ctx.body = res
