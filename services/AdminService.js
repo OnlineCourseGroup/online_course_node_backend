@@ -9,7 +9,7 @@ class AdminService extends BaseService {
   }  
 
   async login(ctx) {
-    const { success, err, data } = await this.execute(ctx, 'login', true);
+    const { success, err, data } = await this.execute(ctx, 'login');
     if (success) {
       const { count } = data;
       if (count >= 1) {
