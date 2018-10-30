@@ -5,4 +5,7 @@ module.exports = {
   login: {
     method: POST,
   },
+  single: {
+    method: POST,
+  },
 }
