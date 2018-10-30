@@ -21,7 +21,7 @@ class BaseController {
     const questions = keys.map(item => '?').join(',') // 对应的参数占位符
     // 补全sql语句 insert into table (x, xx) values(x, xx)
     const sql = `insert into ${this.table}(${names},gmt_create_time,status) values(${questions},now(),?)`
-    return await query(sql, [...vals, STATUS.NORMAL])
+    return await query(sql, [...vals, STATUS.NORMAL], true)
   }
 
   async update(row) {
@@ -38,7 +38,7 @@ class BaseController {
     } = NtNUpdate(row, _sql)// 获取对象内非空值，加工sql 语句  update table set name=?, val= ?
     // 补全sql语句 update table set name = ?, val = ? where id = ?
     _sql = sql + 'where id = ?'
-    return await query(_sql, [...args, id])
+    return await query(_sql, [...args, id], true)
   }
 
   async delete(row) {
@@ -47,12 +47,12 @@ class BaseController {
     } = row // 获取数据内的id
     // 补全sql update table set status = ? where id = ?
     const sql = `update ${this.table} set status = ? where id = ?`
-    return await query(sql, [STATUS.DELETED, id])
+    return await query(sql, [STATUS.DELETED, id], true)
   }
 
-  async excute(sql, vals) {
+  async excute(sql, vals, isSingle = false) {
     // 执行方法
-    return await query(sql, vals);
+    return await query(sql, vals, isSingle);
   }
   // log 方法
   log({func, err}) {

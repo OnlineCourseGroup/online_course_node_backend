@@ -21,5 +21,19 @@ class AdminService extends BaseService {
       ctx.body = failed(err);
     }
   }
+
+  async login(ctx) {
+    const { success, err, data } = await this.execute(ctx, 'single');
+    if (success) {
+      const keys = Object.keys(data);
+      if (keys > 0) {
+        ctx.body = successWithCode(data);
+      } else {
+        ctx.body = failed('操作失败');
+      }
+    } else {
+      ctx.body = failed(err);
+    }
+  }
 }
 module.exports = new AdminService();
