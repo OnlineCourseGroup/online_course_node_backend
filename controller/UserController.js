@@ -10,5 +10,20 @@ class UserController extends BaseController {
     const sql = `select count(*) from ${this.table} where user_name=? and password = ?`;
     return await this.excute(sql, [userName, password, STATUS.NORMAL]);
   }
+  async single(row) {
+    const { id  } = row;
+    const sql = `select * from ${this.table} where id = ?`;
+    return await this.excute(sql, [id]);
+  }
+  async update(row) {
+    const { id  } = row;
+    const sql = `update ${this.table} set account = ?  where id = ?`;
+    return await this.excute(sql, [id]);
+  }
+  async delect(row) {
+    const { id  } = row;
+    const sql = `delect * from ${this.table} where id = ?`;
+    return await this.excute(sql, [id]);
+  }
 }
 module.exports = UserController;

@@ -5,4 +5,13 @@ module.exports = {
   login: {
     method: POST,
   },
+  single: {
+    method: POST,
+  },
+  delect: {
+    method: POST,
+  },
+  update: {
+    method: POST,
+  }
 }

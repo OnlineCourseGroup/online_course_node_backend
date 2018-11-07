@@ -8,4 +8,10 @@ module.exports = {
   single: {
     method: POST,
   },
+  delect: {
+    method: POST,
+  },
+  update: {
+    method: POST,
+  }
 }
