@@ -4,6 +4,7 @@ const { query } = require('./lib/mysql');
 setImmediate(async () => {
   for(const each of sqls) {
     const { drop, create, use} = each;
+    console.log(create);
     await query(drop, []);
     await query(create, []);
     if (use) await query(use, []);
