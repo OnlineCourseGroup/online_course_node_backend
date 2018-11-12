@@ -8,6 +8,11 @@ class OrderController extends BaseController {
     row.timestampCreateTime = Date.now();
     return this.insert(row);
   }
+  async single(row) {
+    const { id  } = row;
+    const sql = `select * from ${this.table} where id = ?`;
+    return await this.excute(sql, [id]);
+  }
 
 }
 module.exports = OrderController;
