@@ -11,9 +11,10 @@ const update = (params, sql) =>  {
   let keys = Object.keys(params)
   let arr = []
   keys.forEach((key) => {
-    if (key) {
+    const value =  params[key]
+    if (key && value) {
       sql = sql + `${key} = ? ,`
-      arr.push(params[key])
+      arr.push(value)
     }
   })
   sql = sql.substring(0, sql.length - 1)

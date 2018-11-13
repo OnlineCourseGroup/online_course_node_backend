@@ -1,7 +1,7 @@
 const pool = require('../lib/mysql') // 导入封装好的mysql库
 const { query } = pool // 导入query方法
 const { STATUS } = require('../enum') // 导入枚举类型STATUS
-
+const { replaceCamel, NtNUpdate } = require('../helper');
 class BaseController {
   constructor() {
     this.table = ''
@@ -16,7 +16,7 @@ class BaseController {
     const {
       keys,
       vals
-    } = filterCamel(row) // 将驼峰命令转换为下划线
+    } = replaceCamel(row) // 将驼峰命令转换为下划线
     const names = keys.join(',') // 对应的参数
     const questions = keys.map(item => '?').join(',') // 对应的参数占位符
     // 补全sql语句 insert into table (x, xx) values(x, xx)
