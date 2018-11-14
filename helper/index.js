@@ -73,8 +73,9 @@ const camel2UnderLine = (val, char = '_') => {
 const fileterCamel = (obj, char = '_') => {
   const keys = Object.keys(obj)
   return keys.reduce((init, item) => {
-    const str = item
-    if (~item.indexOf(char)) {
+    let str = item;
+    console.log(/[A-Z]/g.test(item))
+    if (/[A-Z]/g.test(item)) {
       str = camel2UnderLine(item)
     }
     init.keys.push(str)
