@@ -1,10 +1,11 @@
 const BaseService = require('./BaseService');
 const AdminController = require('../controller/AdminController');
-const { pojo,} = require('../helper'); // 获取辅助类里面的一些方法
-const { failed, successWithCode } = pojo; // 获取消息集里的一些辅助方法
+const { pojo, allTypeReplaceUnderLine } = require('../helper'); // 获取辅助类里面的一些方法
+const { failed, successWithCode, success: successPojo } = pojo; // 获取消息集里的一些辅助方法
 class AdminService extends BaseService {
   constructor() {
     super();
+    console.log(new BaseService());
     this.controller = new AdminController();
   }  
 
@@ -23,39 +24,15 @@ class AdminService extends BaseService {
   }
 
   async single(ctx) {
+    console.log(this);
     const { success, err, data } = await this.execute(ctx, 'single');
     if (success) {
       const keys = Object.keys(data);
-      if (keys > 0) {
-        ctx.body = successWithCode(data);
+      console.log(keys);
+      if (keys.length > 0) {
+        ctx.body = successPojo(allTypeReplaceUnderLine(data));
       } else {
         ctx.body = failed('操作失败');
-      }
-    } else {
-      ctx.body = failed(err);
-    }
-  }
-  async delete(ctx) {
-    const { success, err, data } = await this.execute(ctx, 'delect');
-    if (success) {
-      const keys = Object.keys(data);
-      if (keys > 1) {
-        ctx.body = successWithCode(data);
-      } else {
-        ctx.body = failed('删除失败');
-      }
-    } else {
-      ctx.body = failed(err);
-    }
-  }
-  async update(ctx) {
-    const { success, err, data } = await this.execute(ctx, 'update');
-    if (success) {
-      const keys = Object.keys(data);
-      if (keys > 1) {
-        ctx.body = successWithCode(data);
-      } else {
-        ctx.body = failed('修改失败');
       }
     } else {
       ctx.body = failed(err);

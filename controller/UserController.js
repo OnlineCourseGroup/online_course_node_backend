@@ -8,7 +8,7 @@ class UserController extends BaseController {
   async single(row) {
     const { managerName, password } = row;
     const sql = `select count(*) from ${this.table} where name=? and password = ?`;
-    return await this.excute(sql, [id]);
+    return await this.execute(sql, [id]);
   }
  
 }

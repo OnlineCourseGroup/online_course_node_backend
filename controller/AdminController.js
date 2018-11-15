@@ -10,12 +10,12 @@ class AdminController extends BaseController {
   async login(row) {
     const { account, password } = row;
     const sql = `select count(*) as count from ${this.table} where account=? and password = ?`;
-    return await this.excute(sql, [account, password, STATUS.NORMAL], true);
+    return await this.execute(sql, [account, password, STATUS.NORMAL], true);
   }
   async single(row) {
     const { id  } = row;
     const sql = `select * from ${this.table} where id = ?`;
-    return await this.excute(sql, [id]);
+    return await this.execute(sql, [id], true);
   }
   
 

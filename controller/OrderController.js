@@ -11,7 +11,7 @@ class OrderController extends BaseController {
   async single(row) {
     const { id  } = row;
     const sql = `select * from ${this.table} where id = ?`;
-    return await this.excute(sql, [id]);
+    return await this.execute(sql, [id]);
   }
 
 }

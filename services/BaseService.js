@@ -7,6 +7,8 @@ const funcs = [
   'insert',
   'update',
   'delete',
+  'execute',
+  'executeNonData',
 ]
 class BaseService {
   constructor() {
@@ -64,12 +66,13 @@ class BaseService {
       ctx.body = failed(err)
     }
   }
-  async excute(ctx, key) {
+  async execute(ctx, key) {
     const { body: row } = ctx.request;
     const result = await this.controller[key](row);
+    console.log(result);
     return result;
   }
-  async excuteNonData(ctx, key, msg = '操作成功') {
+  async executeNonData(ctx, key, msg = '操作成功') {
     const { body: row } = ctx.request;
     const { success, err }  = await this.controller[key](row);
     if (success) {

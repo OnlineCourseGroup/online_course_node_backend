@@ -50,13 +50,13 @@ class BaseController {
     return await query(sql, [STATUS.DELETED, id], true)
   }
 
-  async excute(sql, vals, isSingle = false) {
+  async execute(sql, vals, isSingle = false) {
     // 执行方法
     return await query(sql, vals, isSingle);
   }
   // log 方法
   log({func, err}) {
-    console.log(`excute function[${func}] occured error : ${err.message || err}`)
+    console.log(`execute function[${func}] occured error : ${err.message || err}`)
   }
 
 }
