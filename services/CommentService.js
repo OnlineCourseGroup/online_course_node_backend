@@ -8,3 +8,4 @@ class CommentService extends BaseService {
   }
 }
 module.exports = new CommentService();
+ 

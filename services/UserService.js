@@ -29,31 +29,5 @@ class UserService extends BaseService {
       ctx.body = failed(err);
     }
   }
-  async delete(ctx) {
-    const { success, err, data } = await this.execute(ctx, 'delect');
-    if (success) {
-      const keys = Object.keys(data);
-      if (keys > 1) {
-        ctx.body = successWithCode(data);
-      } else {
-        ctx.body = failed('删除失败');
-      }
-    } else {
-      ctx.body = failed(err);
-    }
-  }
-  async update(ctx) {
-    const { success, err, data } = await this.execute(ctx, 'update');
-    if (success) {
-      const keys = Object.keys(data);
-      if (keys > 1) {
-        ctx.body = successWithCode(data);
-      } else {
-        ctx.body = failed('修改失败');
-      }
-    } else {
-      ctx.body = failed(err);
-    }
-  }
 }
 module.exports = new UserService();
